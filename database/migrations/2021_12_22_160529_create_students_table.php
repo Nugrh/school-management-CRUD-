@@ -17,14 +17,13 @@ class CreateStudentsTable extends Migration
             $table->id();
             $table->string('name') ;
             $table->string('email')->unique()->nullable();
-            $table->string('username')->unique();
             $table->date('birth');
-            $table->bigInteger('student_id')->unique();
+            $table->bigInteger('student_id')->unique()->default(rand(1,9999999999));
             $table->string('class');
             $table->string('address');
-            $table->string('role');
+            $table->string('role')->default('student');
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

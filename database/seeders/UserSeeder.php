@@ -29,12 +29,10 @@ class UserSeeder extends Seeder
 
         $student = Student::create([
             'name' => 'student',
-            'username' => 'student',
             'student_id' => rand(0,9999999999),
             'birth' => '2021-12-23',
             'class' => '11',
             'address' => 'Jakarta',
-            'email' => 'student@role.test',
             'password' => Hash::make('student'),
             'role' => 'student',
         ]);
@@ -43,7 +41,6 @@ class UserSeeder extends Seeder
 
         $teacher = Teacher::create([
             'name' => 'teacher',
-            'username' => 'teacher',
             'teacher_id' => rand(0,9999999999),
             'birth' => '2021-12-23',
             'email' => 'teacher@role.test',

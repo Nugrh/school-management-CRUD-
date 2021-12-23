@@ -25,10 +25,12 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 // Admin
 Route::prefix('student')->group(function () {
     Route::get('/', [StudentController::class, 'index'])->name('student');
+    Route::post('/store', [StudentController::class, 'store'])->name('student.store');
 });
 
 Route::prefix('teacher')->group(function () {
     Route::get('/', [TeacherController::class, 'index'])->name('teacher');
+    Route::post('/store', [TeacherController::class, 'store'])->name('teacher.store');
 });
 
 Auth::routes();

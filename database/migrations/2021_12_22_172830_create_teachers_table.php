@@ -17,13 +17,12 @@ class CreateTeachersTable extends Migration
             $table->id();
             $table->string('name') ;
             $table->string('email')->unique();
-            $table->string('username')->unique();
-            $table->bigInteger('teacher_id');
+            $table->bigInteger('teacher_id')->unique()->default(rand(1,9999999999));
             $table->string('address');
             $table->date('birth');
-            $table->string('role');
+            $table->string('role')->default('teacher');
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->default(0);
             $table->timestamps();
         });
     }

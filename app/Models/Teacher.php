@@ -16,10 +16,12 @@ class Teacher extends Authenticatable
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'teacher_id',
         'name',
         'email',
-        'username',
+        'address',
         'role',
+        'birth',
         'password',
     ];
 
