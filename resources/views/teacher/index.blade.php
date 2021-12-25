@@ -1,13 +1,38 @@
 @extends('layouts.app')
 
 @section('content')
-    <form action="" method="" id="update-form"></form>
     <div class="row">
-        <div class="col-8">
-            <div class="alert alert-info d-flex justify-content-between align-items-center">
+        <div class="col-12">
+            <div class="feedback">
+                @if(\Illuminate\Support\Facades\Session::has('created'))
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <strong>Success!</strong> {{ \Illuminate\Support\Facades\Session::get('created', '') }}
+                    </div>
+                @elseif(\Illuminate\Support\Facades\Session::has('updated'))
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <strong>Success!</strong> {{ \Illuminate\Support\Facades\Session::get('updated', '') }}
+                    </div>
+                @elseif(\Illuminate\Support\Facades\Session::has('deleted'))
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <strong>Success!</strong> {{ \Illuminate\Support\Facades\Session::get('deleted', '') }}
+                    </div>
+                @elseif(\Illuminate\Support\Facades\Session::has('delete-fail'))
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <strong>Fail!</strong> {{ \Illuminate\Support\Facades\Session::get('delete-fail', '') }}
+                    </div>
+                @endif
+            </div>
+        </div>
+        <div class="col-md-8">
+
+            <div class="alert alert-primary d-flex justify-content-between align-items-center">
                 <strong class="my-1">Teacher table</strong>
                 <form action="">
-                    <input type="text" class="form-control form-control-sm m-0" placeholder="Search Student">
+                    <input type="text" class="form-control form-control-sm m-0" placeholder="Search Teacher">
                 </form>
             </div>
             <div class="card">
@@ -33,11 +58,10 @@
                                 <td>{{ $teacher->email }}</td>
                                 <td>{{ $teacher->address }}</td>
                                 <td class="">
-                                    <a href="" class="mr-1"><i class="fas fa-edit"></i></a>
-                                    <a href="" class="ml-1"><i class="fas fa-trash"></i></a>
+                                    <a href="{{ route('teacher') }}/edit/{{ $teacher->id }}/{{ $teacher->teacher_id }}" class="mr-1 fas fa-edit"></a>
+                                    <a href="{{ route('teacher') }}/delete/{{ $teacher->id }}/{{ $teacher->teacher_id }}" onclick="return confirm('Are you sure want to delete this record')" class="ml-1 fas fa-trash"></a>
                                 </td>
                             </tr>
-
                         @empty
                             <td class="col" colspan="6"><b>Teacher is empty</b></td>
                         @endforelse
@@ -45,9 +69,10 @@
                     </table>
                 </div>
             </div>
+            {{ $teachers->links() }}
         </div>
-        <div class="col">
-            <div class="alert alert-info py-3">
+        <div class="col-md">
+            <div class="alert alert-primary py-3">
                 <strong class="">Add new Teacher</strong>
             </div>
             <div class="card p-2">
@@ -99,7 +124,7 @@
                         @endif
                     </div>
                     <div class="mb-3">
-                        <button class="btn btn-info" type="submit">Submit</button>
+                        <button class="btn btn-primary" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
