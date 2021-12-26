@@ -18,7 +18,7 @@ class CreateStudentsTable extends Migration
             $table->string('name') ;
             $table->string('email')->unique()->nullable();
             $table->date('birth');
-            $table->bigInteger('student_id')->unique()->default(rand(1,9999999999));
+            $table->bigInteger('student_id')->unique()->default(rand(1000000000,9999999999));
             $table->string('class');
             $table->string('address');
             $table->string('role')->default('student');

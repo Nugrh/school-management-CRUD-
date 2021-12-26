@@ -17,7 +17,7 @@ class CreateTeachersTable extends Migration
             $table->id();
             $table->string('name') ;
             $table->string('email')->unique();
-            $table->bigInteger('teacher_id')->unique()->default(rand(1,9999999999));
+            $table->bigInteger('teacher_id')->unique()->default(rand(1000000000,9999999999));
             $table->string('address');
             $table->date('birth');
             $table->string('role')->default('teacher');
