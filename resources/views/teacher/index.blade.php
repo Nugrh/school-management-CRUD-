@@ -31,8 +31,9 @@
 
             <div class="alert alert-primary d-flex justify-content-between align-items-center">
                 <strong class="my-1">Teacher table</strong>
-                <form action="">
-                    <input type="text" class="form-control form-control-sm m-0" placeholder="Search Teacher">
+                <form action="{{ route('teacher.search') }}" method="get">
+                    @csrf
+                    <input type="text" name="keyword" class="form-control form-control-sm m-0" placeholder="Search Teacher">
                 </form>
             </div>
             <div class="card">
@@ -76,10 +77,10 @@
                 <strong class="">Add new Teacher</strong>
             </div>
             <div class="card p-2">
-                <form action="{{ route('teacher.store') }}" method="post">
+                <form action="{{ route('teacher.store') }}" method="post" id="store">
                     @csrf
                     <div class="mb-3">
-                        <input type="text" name="teacher_id" id="teacher_id" class="form-control{{ $errors->has('teacher_id') ? ' is-invalid' : '' }}" placeholder="Teacher ID" value="{{ old('teacher_id') }}">
+                        <input type="text" name="teacher_id" id="teacher_id" class="form-control{{ $errors->has('teacher_id') ? ' is-invalid' : '' }}" placeholder="Teacher ID (leave this empty for default value)" value="{{ old('teacher_id') }}">
 
                         @if($errors->has('teacher_id'))
                             <span class="invalid-feedback" role="alert">

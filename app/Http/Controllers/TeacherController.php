@@ -23,14 +23,17 @@ class TeacherController extends Controller
 
     public function store(Request $request)
     {
-//        dd($request->all());
         $request->validate([
-            'teacher_id' => 'required|numeric|digits:10|unique:teachers,teacher_id',
+            'teacher_id' => 'nullable|numeric|digits:10|unique:teachers,teacher_id',
             'name' => 'required',
             'birth' => 'required|date',
             'email' => 'required|unique:teachers,email',
             'address' => 'required',
         ]);
+
+        if (empty($request->teacher_id)){
+            $request->teacher_id = rand(1000000000, 9999999999);
+        }
 
         Teacher::create([
             'teacher_id' => $request->teacher_id,
@@ -73,6 +76,14 @@ class TeacherController extends Controller
             return Redirect::back()->with('deleted', 'Record successfully deleted');
         }
         return Redirect::back()->with('delete-fail', 'Teacher ID does not match with this record');
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->keyword;
+        $teachers = Teacher::where('name', 'LIKE', "%{$keyword}%")->paginate(8);
+
+        return view('teacher.index', compact('teachers'));
     }
 
 }
