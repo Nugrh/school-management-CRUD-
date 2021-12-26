@@ -41,47 +41,47 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function username()
-    {
-        return 'username';
-    }
-
-    public function login(Request $request)
-    {
-        $input = $request->all();
-
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required'
-        ]);
-
-        /**
-         * Login to the application
-         *
-         * @return redirect
-         */
-        if (Auth::guard('user')->attempt(['username' => $input['username'], 'password' => $input['password']])){
-            return redirect()->route('home');
-        } elseif (Auth::guard('student')->attempt(['username' => $input['username'], 'password' => $input['password']])){
-            return redirect()->route('home');
-        } elseif (Auth::guard('teacher')->attempt(['username' => $input['username'], 'password' => $input['password']])){
-            return redirect()->route('home');
-        } else {
-            return $this->sendFailedLoginResponse($request);
-        }
-    }
-
-    public function logout(Request $request)
-    {
-        if (Auth::guard('student')->check()){
-            Auth::guard('student')->logout();
-        } elseif (Auth::guard('user')->check()){
-            Auth::guard('user')->logout();
-        } elseif (Auth::guard('teacher')->check()) {
-            Auth::guard('teacher')->logout();
-        }
-        return redirect('/');
-
-    }
+//    public function username()
+//    {
+//        return 'username';
+//    }
+//
+//    public function login(Request $request)
+//    {
+//        $input = $request->all();
+//
+//        $request->validate([
+//            'username' => 'required',
+//            'password' => 'required'
+//        ]);
+//
+//        /**
+//         * Login to the application
+//         *
+//         * @return redirect
+//         */
+//        if (Auth::guard('user')->attempt(['username' => $input['username'], 'password' => $input['password']])){
+//            return redirect()->route('home');
+//        } elseif (Auth::guard('student')->attempt(['username' => $input['username'], 'password' => $input['password']])){
+//            return redirect()->route('home');
+//        } elseif (Auth::guard('teacher')->attempt(['username' => $input['username'], 'password' => $input['password']])){
+//            return redirect()->route('home');
+//        } else {
+//            return $this->sendFailedLoginResponse($request);
+//        }
+//    }
+//
+//    public function logout(Request $request)
+//    {
+//        if (Auth::guard('student')->check()){
+//            Auth::guard('student')->logout();
+//        } elseif (Auth::guard('user')->check()){
+//            Auth::guard('user')->logout();
+//        } elseif (Auth::guard('teacher')->check()) {
+//            Auth::guard('teacher')->logout();
+//        }
+//        return redirect('/');
+//
+//    }
 
 }
