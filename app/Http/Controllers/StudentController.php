@@ -26,12 +26,16 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'student_id' => 'required|numeric|digits:10|unique:students,student_id',
+            'student_id' => 'nullable|numeric|digits:10|unique:students,student_id',
             'name' => 'required',
             'birth' => 'required|date',
             'class' => 'required',
             'address' => 'required',
         ]);
+
+        if (empty($request->student_id)){
+            $request->student_id = rand(1000000000, 9999999999);
+        }
 
         Student::create([
             'student_id' => $request->student_id,
@@ -73,5 +77,13 @@ class StudentController extends Controller
             return Redirect::back()->with('deleted', 'Record successfully deleted');
         }
         return Redirect::back()->with('delete-fail', 'Student ID does not match with this record');
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->keyword;
+        $students = Student::where('name', 'LIKE', "%{$keyword}%")->paginate(8);
+
+        return view('student.index', compact('students'));
     }
 }

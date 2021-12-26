@@ -30,8 +30,9 @@
         <div class="col-md-8">
             <div class="alert alert-primary d-flex justify-content-between align-items-center">
                 <strong class="my-1">Student table</strong>
-                <form action="">
-                    <input type="text" class="form-control form-control-sm" placeholder="Search Student">
+                <form action="{{ route('student.search') }}" method="get">
+                    @csrf
+                    <input type="text" name="keyword" class="form-control form-control-sm m-0" placeholder="Search Student">
                 </form>
             </div>
             <div class="card">
@@ -78,7 +79,7 @@
                 <form action="{{ route('student.store') }}" method="post">
                     @csrf
                     <div class="mb-3">
-                        <input type="text" name="student_id" id="student_id" class="form-control{{ $errors->has('student_id') ? ' is-invalid' : '' }}" placeholder="Student ID" value="{{ old('student_id') }}">
+                        <input type="text" name="student_id" id="student_id" class="form-control{{ $errors->has('student_id') ? ' is-invalid' : '' }}" placeholder="Student ID (leave this empty for default value)" value="{{ old('student_id') }}">
 
                         @if($errors->has('student_id'))
                             <span class="invalid-feedback" role="alert">
