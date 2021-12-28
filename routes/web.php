@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -41,6 +43,14 @@ Route::prefix('teacher')->group(function () {
 
     Route::post('/store', [TeacherController::class, 'store'])->name('teacher.store');
     Route::post('/update', [TeacherController::class, 'update'])->name('teacher.update');
+
+//    Attendance
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance');
+    Route::post('/attendance/store', [AttendanceController::class, 'store'])->name('attendance.store');
+});
+
+Route::prefix('lesson')->group(function () {
+    Route::get('/', [LessonController::class, 'index'])->name('lesson');
 });
 
 Auth::routes();
