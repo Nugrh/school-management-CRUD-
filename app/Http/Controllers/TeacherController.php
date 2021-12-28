@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
@@ -11,13 +11,13 @@ class TeacherController extends Controller
 {
     public function index()
     {
-        $teachers = Teacher::paginate(8);
+        $teachers = User::where('role', 'teacher')->paginate(8);
         return view('teacher.index', compact('teachers'));
     }
 
     public function edit($id)
     {
-        $teacher = Teacher::all()->find($id);
+        $teacher = User::all()->find($id);
         return view('teacher.edit', compact('teacher'));
     }
 
@@ -35,7 +35,7 @@ class TeacherController extends Controller
             $request->teacher_id = rand(1000000000, 9999999999);
         }
 
-        Teacher::create([
+        User::create([
             'teacher_id' => $request->teacher_id,
             'name' => $request->name,
             'birth' => $request->birth,
@@ -48,7 +48,7 @@ class TeacherController extends Controller
 
     public function update(Request $request)
     {
-        $teacher = Teacher::where('id', $request->id);
+        $teacher = User::where('id', $request->id);
         $request->validate([
             'teacher_id' => ['required','digits:10',
                 Rule::unique('teachers')->ignore($request->id)],
@@ -70,9 +70,9 @@ class TeacherController extends Controller
 
     public function destroy($id, $teacher_id)
     {
-        $teacher = Teacher::all()->find($id);
+        $teacher = User::where('role', 'student')->find($id);
         if ($teacher_id === "$teacher->teacher_id"){
-            Teacher::where('id', $id)->delete();
+            User::where('id', $id)->delete();
             return Redirect::back()->with('deleted', 'Record successfully deleted');
         }
         return Redirect::back()->with('delete-fail', 'Teacher ID does not match with this record');
@@ -81,9 +81,10 @@ class TeacherController extends Controller
     public function search(Request $request)
     {
         $keyword = $request->keyword;
-        $teachers = Teacher::where('name', 'LIKE', "%{$keyword}%")->paginate(8);
+        $teachers = User::where(
+            'name', 'LIKE', "%{$keyword}%"
+        )->where('role', 'teacher')->paginate(8);
 
         return view('teacher.index', compact('teachers'));
     }
-
 }
