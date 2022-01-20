@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
-use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,10 +12,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-//    public function __construct()
-//    {
-//        $this->middleware('auth:web,student,user,teacher');
-//    }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /**
      * Show the application dashboard.
@@ -25,8 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $students = Student::all();
-        $teacher = Teacher::all();
+        $students = User::where('role', 'student');
+        $teacher = User::where('role', 'teacher');
         return view('home', compact('students', 'teacher'));
     }
 }

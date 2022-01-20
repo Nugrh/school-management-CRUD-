@@ -43,9 +43,8 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Birth</th>
-                            <th scope="col">Email</th>
                             <th scope="col">Address</th>
+                            <th scope="col">Lesson</th>
                             <th scope="col">Action</th>
                         </tr>
 
@@ -55,9 +54,8 @@
                             <tr>
                                 <th>{{ $teacher->teacher_id }}</th>
                                 <td>{{ $teacher->name }}</td>
-                                <td>{{ $teacher->birth }}</td>
-                                <td>{{ $teacher->email }}</td>
                                 <td>{{ $teacher->address }}</td>
+                                <td>{{ $teacher->lesson }}</td>
                                 <td class="">
                                     <a href="{{ route('teacher') }}/edit/{{ $teacher->id }}/{{ $teacher->teacher_id }}" class="mr-1 fas fa-edit"></a>
                                     <a href="{{ route('teacher') }}/delete/{{ $teacher->id }}/{{ $teacher->teacher_id }}" onclick="return confirm('Are you sure want to delete this record')" class="ml-1 fas fa-trash"></a>

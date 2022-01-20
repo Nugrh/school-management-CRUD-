@@ -7,6 +7,8 @@ use App\Models\Classroom;
 use App\Models\Lesson;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class AttendanceController extends Controller
 {
@@ -38,9 +40,51 @@ class AttendanceController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
-        User::where('id', $request->id)->update([
-            'attendance' => $request->attendance
-        ]);
+
+//        dd($request->student_id[]);
+//
+//        $student_id = [];
+//        foreach ($request->student_id as $student){
+//            $student_id[] = $student;
+//        }
+
+//        $request->input("$student_id]");
+
+//        dd($student_id);
+//         dd($request->input("$student_id"));
+        $students = User::where('class', $request->class)->get();
+
+        $data = [];
+        foreach ($students as $student){
+            $data[] = array(
+                'student_id' => $request->input($student->student_id),
+                'name' => $request->input('name'.$student->student_id),
+                'attendance' => $request->input('radio'.$student->student_id),
+            );
+        }
+//        $data->toJson;
+
+//        dd($data);
+        Attendance::create($data);
+
+//        Storage::put('storage/attendance.txt', $data);
+
+//        dd($data);
+//        $data->toJson();
+
+//        $students->update($data);
+
+
+//
+//        $request->validate([
+//            'student_id' => 'required',
+//            'name' => 'required',
+//            'attendance' => 'required',
+//        ]);
+//
+//        User::where('student_id', $request->student_id)->update([
+//            'attendance' => $request->attendance
+//        ]);
+//        Redirect::back();
     }
 }

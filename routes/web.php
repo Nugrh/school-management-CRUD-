@@ -46,6 +46,8 @@ Route::prefix('teacher')->group(function () {
 
 //    Attendance
     Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance');
+//    Route::get('/attendance/find', [AttendanceController::class, 'find'])->name('attendance.find');
+    Route::get('/attendance/search', [AttendanceController::class, 'seach'])->name('attendance.search');
     Route::post('/attendance/store', [AttendanceController::class, 'store'])->name('attendance.store');
 });
 

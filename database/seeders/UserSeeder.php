@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Classroom;
 use App\Models\Lesson;
 use Faker\Factory as Faker;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -145,5 +146,11 @@ class UserSeeder extends Seeder
             'lesson' => "Lesson 9",
             'time' => '9:00:00'
         ]);
+
+        for ($i = 0; $i <= 2; $i++) {
+            Classroom::create([
+                'class' => "1$i",
+            ]);
+        }
     }
 }
