@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AttendanceExport;
 use App\Models\Attendance;
 use App\Models\Classroom;
 use App\Models\Lesson;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Excel;
 
 class AttendanceController extends Controller
 {
@@ -26,14 +30,14 @@ class AttendanceController extends Controller
         return view('teacher.attendance.search', compact('lessons', 'classes'));
     }
 
-    public function seach(Request $request)
+    public function search(Request $request)
     {
         $request->validate([
             'class' => 'required',
         ]);
 
         $students = User::where('class', 'LIKE', "%{$request->class}%")
-            ->where('role', 'student') ->paginate(30);
+            ->where('role', 'student')->paginate(120);
 
         return view('teacher.attendance.index', compact('students'));
     }
@@ -59,13 +63,15 @@ class AttendanceController extends Controller
             $data[] = array(
                 'student_id' => $request->input($student->student_id),
                 'name' => $request->input('name'.$student->student_id),
+                'class' => $request->input('class'.$student->student_id),
                 'attendance' => $request->input('radio'.$student->student_id),
             );
         }
+
 //        $data->toJson;
 
 //        dd($data);
-        Attendance::create($data);
+        Attendance::insert($data);
 
 //        Storage::put('storage/attendance.txt', $data);
 
@@ -85,6 +91,19 @@ class AttendanceController extends Controller
 //        User::where('student_id', $request->student_id)->update([
 //            'attendance' => $request->attendance
 //        ]);
-//        Redirect::back();
+
+        Redirect::back();
+    }
+
+    protected $class;
+
+    public function export_excel($class){
+
+        $this->class = $class;
+        $attendance = new AttendanceExport($this->class);
+        return $attendance->download('test.xlsx');
+//        return (new AttendanceExport(Arr::except($this->class)))->download(''test.xlsx'');
+
+//        return Excel::download(new AttendanceExport($this->class), 'attendance.xlsx');
     }
 }

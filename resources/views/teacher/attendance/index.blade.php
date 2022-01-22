@@ -4,6 +4,7 @@
     <div class="row">
         <div class="col">
             <div class="alert alert-primary">Attendance | Class {{ $students->first()->class }}</div>
+            <a href="{{ route('attendance.export', $students->first()->class) }}">Export</a>
             <div class="card">
                 <div class="table-responsive">
                     <table class="table table-striped">
@@ -21,15 +22,14 @@
                             @csrf
                             @forelse($students as $student)
                                 <input type="hidden" name="student_id[]" value="{{ $student->student_id }}">
+                                <tr>
+                                    <input type="hidden" name="{{$student->student_id}}" value="{{ $student->student_id }}">
+                                    <input type="hidden" name="name{{$student->student_id}}" value="{{ $student->name }}">
+                                    <input type="hidden" name="class{{$student->student_id}}" value="{{ $student->class }}">
 
-                                <tr class="">
-                                    <th class="col-1">
-                                        {{ $student->student_id }}
-                                        <input type="hidden" name="{{$student->student_id}}" value="{{ $student->student_id }}">
-                                    </th>
+                                    <th class="col-1">{{ $student->student_id }}</th>
                                     <td>{{ $student->name }}</td>
 
-                                    <input type="hidden" name="name{{$student->student_id}}" value="{{ $student->name }}">
                                     <td class="col-1 text-center">
                                         <div class="form-check">
                                             <input class="form-check-input" id="attendance" type="radio" name="radio{{$student->student_id}}" value="attend">

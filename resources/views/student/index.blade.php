@@ -56,9 +56,6 @@
                                 <td id="student-name">
                                     {{ $student->name }}
                                 </td>
-                                <td id="student-name-edit">
-                                    <input type="text" placeholder="name">
-                                </td>
                                 <td>{{ $student->birth }}</td>
                                 <td>{{ $student->class }}</td>
                                 <td>{{ $student->address }}</td>

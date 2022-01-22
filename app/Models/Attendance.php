@@ -9,13 +9,15 @@ class Attendance extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $table = 'attendances';
 
-    protected $guarded;
     protected $fillable = [
         'name',
         'student_id',
         'class',
-        'attendance'
+        'attendance',
+        'created_at'
     ];
 }

@@ -14,12 +14,14 @@ class CreateAttendancesTable extends Migration
     public function up()
     {
         Schema::create('attendances', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('student_id')->default(0);
-            $table->string('name')->default(0);
-            $table->string('class')->default(0);
-            $table->string('attendance')->default(0);
-            $table->timestamps();
+//            $table->id();
+            $table->bigInteger('student_id');
+            $table->string('name');
+            $table->string('class');
+            $table->string('attendance');
+
+            $table->timestamp('created_at')->default(\App\Models\Attendance::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\App\Models\Attendance::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 

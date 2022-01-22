@@ -47,7 +47,8 @@ Route::prefix('teacher')->group(function () {
 //    Attendance
     Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance');
 //    Route::get('/attendance/find', [AttendanceController::class, 'find'])->name('attendance.find');
-    Route::get('/attendance/search', [AttendanceController::class, 'seach'])->name('attendance.search');
+    Route::get('/attendance/search', [AttendanceController::class, 'search'])->name('attendance.search');
+    Route::get('/attendance/export/{class}', [AttendanceController::class, 'export_excel'])->name('attendance.export');
     Route::post('/attendance/store', [AttendanceController::class, 'store'])->name('attendance.store');
 });
 
